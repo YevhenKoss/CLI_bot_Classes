@@ -7,11 +7,14 @@ class AddressBook(UserDict):
 
 
 class Record:
-    def __init__(self, name, phone=None):
+    def __init__(self, name, phone=None, day_of_birth=None):
         self.name = name
         self.phones = []
         if phone:
             self.phones.append(phone)
+        self.birthday = ""
+        if day_of_birth:
+            self.birthday += day_of_birth
 
     def add (self, new_phone):
         self.phones.append(new_phone)
@@ -37,7 +40,19 @@ class Name:
 
 class Phone:
     def __init__(self, value):
-        self.value = value
+        value = str(value)
+        value = (
+            value.strip()
+            .removeprefix("+")
+            .replace("(", "")
+            .replace(")", "")
+            .replace("-", "")
+            .replace(" ", ""))
+        if value.isdigit() and len(value) == 12:
+            self.value = value
+        else:
+            print('Wrong phone number format. Try "+XX(XXX)XXX-XX-XX"')
+            self.value = None
 
 
 class Field:
