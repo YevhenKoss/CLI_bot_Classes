@@ -1,4 +1,5 @@
 from collections import UserDict
+from validation import *
 
 
 class AddressBook(UserDict):
@@ -40,20 +41,25 @@ class Name:
 
 class Phone:
     def __init__(self, value):
-        value = str(value)
-        value = (
-            value.strip()
-            .removeprefix("+")
-            .replace("(", "")
-            .replace(")", "")
-            .replace("-", "")
-            .replace(" ", ""))
-        if value.isdigit() and len(value) == 12:
-            self.value = value
-        else:
-            print('Wrong phone number format. Try "+XX(XXX)XXX-XX-XX"')
-            self.value = None
+        self.__value = phone_number_validation(value)
+
+
+    @property
+    def value(self):
+        return self.__value
+
+
+    @value.setter
+    def value(self, new_value):
+        self.__value = phone_number_validation(new_value)
 
 
 class Field:
     pass
+
+
+name = Name("Bill")
+phone = Phone("+380976772685")
+# print(phone.value)
+phone.value = 38097677222200
+# print(phone.value)
