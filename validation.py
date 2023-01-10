@@ -1,7 +1,10 @@
 from datetime import date
 
 def phone_number_validation(phone):
-    phone = str(phone)
+    if isinstance(phone, str):
+        phone = phone
+    else:
+        phone = str(phone)
     phone = (
         phone.strip()
         .removeprefix("+")
